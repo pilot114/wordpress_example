@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  wordpress:
+    image: wordpress:5.6.0-php7.4-apache
+    restart: always
+    ports:
+      - 8089:80
+    links:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: sw_wordpress
+      WORDPRESS_DB_USER: sw_wordpress
+      WORDPRESS_DB_PASSWORD: sw_wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: sw_wordpress
+      MYSQL_USER: sw_wordpress
+      MYSQL_PASSWORD: sw_wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/var/lib/mysql
